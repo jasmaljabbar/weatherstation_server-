@@ -31,9 +31,9 @@ environ.Env.read_env(str(BASE_DIR / ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =env("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",")
 
 SITE_ID = 1
 
@@ -104,7 +104,7 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url.parse("postgresql://weather_station_93yn_user:SqrDjmndBlchh9s5sXmKTAgkAN5dofjC@dpg-crh69jg8fa8c738so020-a.oregon-postgres.render.com/weather_station_93yn")
+DATABASES["default"] = dj_database_url.parse(env("DATABASES_URL"))
 
 
 # Password validation

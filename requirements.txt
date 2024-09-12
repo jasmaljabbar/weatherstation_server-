@@ -5,7 +5,7 @@ cffi==1.17.0
 charset-normalizer==3.3.2
 cryptography==43.0.1
 defusedxml==0.8.0rc2
-dj-database-url==2.2.0
+dj-database-url==2.1.0
 Django==5.1.1
 django-cors-headers==4.4.0
 django-templated-mail==1.1.1
