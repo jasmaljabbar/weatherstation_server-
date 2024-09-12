@@ -6,7 +6,7 @@ charset-normalizer==3.3.2
 cryptography==43.0.1
 defusedxml==0.8.0rc2
 dj-database-url==2.1.0
-Django==5.1.1
+Django==3.2.1
 django-cors-headers==4.4.0
 django-templated-mail==1.1.1
 djangorestframework==3.15.2
@@ -19,15 +19,14 @@ oauthlib==3.2.2
 packaging==24.1
 pillow==10.4.0
 psycopg2==2.9.9
-psycopg2-binary==2.9.5 
 pyasn1==0.6.0
 pyasn1_modules==0.4.0
 pycparser==2.22
 PyJWT==2.9.0
-python-3.9.16
 python-dotenv==1.0.1
 python-environ==0.4.54
 python3-openid==3.2.0
+pytz==2024.2
 requests==2.32.3
 requests-oauthlib==2.0.0
 rsa==4.9
