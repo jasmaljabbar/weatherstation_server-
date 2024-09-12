@@ -33,14 +33,14 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =env("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",")
-
+ALLOWED_HOSTS = ['*']
 SITE_ID = 1
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 ]
 MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "corsheaders.middleware.CorsMiddleware",
@@ -143,6 +144,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATIC_DIRS = [os.path.join(BASE_DIR, 'BACKEND/static')]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
