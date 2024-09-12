@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 import os
 import environ
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,14 +95,16 @@ WSGI_APPLICATION = 'weatherapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': env("ENGINE"),
-        'NAME': env("NAME"),
-        'USER': env("USER"),
-        'PASSWORD': env("PASSWORD"),
-        'HOST': env("HOST"),
-        'PORT': env("PORT")
+        'ENGINE':env('ENGINE'),
+        'NAME': env('NAME'),
+        'USER': env('USER'),
+        'PASSWORD':env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('PORT')
     }
 }
+
+DATABASES["default"] = dj_database_url.parse("postgresql://weather_station_93yn_user:SqrDjmndBlchh9s5sXmKTAgkAN5dofjC@dpg-crh69jg8fa8c738so020-a.oregon-postgres.render.com/weather_station_93yn")
 
 
 # Password validation

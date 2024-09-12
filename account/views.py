@@ -19,7 +19,10 @@ from datetime import timedelta
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from .models import UserData
 from rest_framework_simplejwt.views import TokenObtainPairView
+import environ
+from pathlib import Path
 
+env = environ.Env(DEBUG=(bool, False))
 
 
 @permission_classes([AllowAny])
@@ -145,8 +148,9 @@ class GoogleAuthentication(APIView):
             return Response({'error': 'No credential provided'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            CLIENT_ID = '1009995668014-ajus0jlg00k0gqobl02m1q9ovqf53vgl.apps.googleusercontent.com'
+            CLIENT_ID =env('CLIENT_ID')
             id_info = id_token.verify_oauth2_token(credential, requests.Request(), CLIENT_ID)
+
             
             # Extract user details
             email = id_info.get('email')
@@ -167,7 +171,7 @@ class GoogleAuthentication(APIView):
                     'first_name': first_name,
                     'last_name': last_name,
                     'password': default_password,
-                    'is_verified': True,  # Already verified via Google
+                    'is_verified': True,  
                 }
                 serializer = GoogleUserSerializer(data=user_data)
                 if serializer.is_valid():
