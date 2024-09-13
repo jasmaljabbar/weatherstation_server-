@@ -95,19 +95,19 @@ WSGI_APPLICATION = 'weatherapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-if not DEBUG:
-    DATABASES = {
-        "default":dj_database_url.parse(os.environ.get("DATABASE_URL"))
-    }
+# if not DEBUG:
+#     DATABASES = {
+#         "default":dj_database_url.parse(os.environ.get("DATABASE_URL"))
+#     }
 
 DATABASES = {
     'default': {
-        'ENGINE':env('ENGINE'),
-        'NAME': env('NAME'),
-        'USER': env('USER'),
-        'PASSWORD':env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('PORT')
+        'ENGINE':os.environ.get('ENGINE'),
+        'NAME': os.environ.get("NAME"),
+        'USER': os.environ.get("USER"),
+        'PASSWORD':os.environ.get("PASSWORD"),
+        'HOST': os.environ.get("HOST"),
+        'PORT': os.environ.get("PORT"),
     }
 }
 
