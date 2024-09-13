@@ -32,7 +32,7 @@ environ.Env.read_env(str(BASE_DIR / ".env"))  # Only for local dev
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =env("DEBUG", cast=bool)
+DEBUG =os.environ.get('DEBUG', 'True') == "True"
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="").split(",")
 
@@ -95,20 +95,22 @@ WSGI_APPLICATION = 'weatherapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE':env('ENGINE'),
-#         'NAME': env('NAME'),
-#         'USER': env('USER'),
-#         'PASSWORD':env('PASSWORD'),
-#         'HOST': env('HOST'),
-#         'PORT': env('PORT')
-#     }
-# }
+if not DEBUG:
+    DATABASES = {
+        "default":dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
 
 DATABASES = {
-    'default': dj_database_url.config(default=env("DATABASE_URL"))
+    'default': {
+        'ENGINE':env('ENGINE'),
+        'NAME': env('NAME'),
+        'USER': env('USER'),
+        'PASSWORD':env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('PORT')
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
