@@ -10,19 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
 from datetime import timedelta
 import os
 import environ
 import dj_database_url
+from pathlib import Path
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env(str(BASE_DIR / ".env"))  # Only for local dev
 
-# Convert Path object to a string before passing to read_env
-environ.Env.read_env(str(BASE_DIR / ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -33,7 +34,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =env("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="").split(",")
 
 SITE_ID = 1
 
@@ -105,8 +106,9 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url.parse(env("DATABASES_URL"))
-
+DATABASES = {
+    'default': dj_database_url.config(default=env("DATABASE_URL"))
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -143,9 +145,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+# Static files
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
@@ -187,7 +189,9 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 
 DEBUG = True
 
+# Media files
 MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DJOSER = {
